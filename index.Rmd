@@ -1,0 +1,61 @@
+---
+title: "Incarceration Race Inequality Report"
+author: "Bohan Yao"
+date: "August 14th, 2022"
+output:
+  html_document:
+    df_print: paged
+  pdf_document: default
+---
+
+```{r setup, include=FALSE, warning = FALSE}
+knitr::opts_chunk$set(echo = TRUE, eval = TRUE)
+```
+
+```{r storevars, echo = FALSE, include = FALSE}
+source("summary_information.R")
+recent_aapi_percent <- overall_aapi_percent
+recent_max_percent <- max_aapi_percent
+recent_max_county <- max_aapi_county[[1]]
+recent_min_percent <- min_aapi_percent
+num_min_percent <- num_min_counties
+all_aapi_percent <- all_years_overall_aapi_percent
+highest_year_percent <- highest_aapi_year_percent
+highest_year <- highest_aapi_year_num[[1]]
+```
+
+## Introduction to Domain and Variable of Interest
+
+Throughout the history of the US, racial discrimination has been a prominent issue, leading to atrocities such as slavery and the Jim Crow segregation laws. In the present day, one of the ways racial discrimination appears is in incarceration, where certain racial groups are suspected to be treated more harshly when being sentenced, leading to disproportionally high amounts of certain racial groups in prison. Much of present day focus on this topic is on the racial discrimination black people face in incarceration. However, one major racial group which has not been studied in this aspect is Asian Americans/Pacific Islanders. As an Asian American myself, I am curious what the percentage of Asian Americans/Pacific Islanders in prisons are, and if any racial biases can be observed contributing to increasing this percentage. Thus, the variable I will focus on analyzing for this report is the percentage of Asian/Pacific Islander prisoners in US counties and states. I will be comparing this variable to the percentage of white prisoners occasionally to gauge racial biases, although I will not be focusing on analyzing the percentage of white prisoners.
+
+To study this, I will be using Vera's [Incarceration Trends Dataset](https://github.com/vera-institute/incarceration-trends). Their dataset contains the average monthly number per year of Asian/Pacific Islander prisoners, white prisoners, and total prisoners, along with many other variables for all of the US counties from 1970 to 2018. The dataset was collected by collecting data from the National Corrections Reporting Program (NCRP) and directly from states' departments of corrections.
+
+## Summary Information
+
+In 2018, the nationwide Asian/Pacific Islander prisoner percentage rate was `r recent_aapi_percent`%. Over all counties in 2018, the maximum Asian/Pacific Islander prisoner percentage rate was `r recent_max_percent`%, in `r recent_max_county`. Over all counties in 2018, `r num_min_percent` counties had the minimum Asian/Pacific Islander prisoner percentage of `r recent_min_percent`%. Over all years, the average Asian/Pacific Islander prisoner percentage rate nationwide was `r all_aapi_percent`%. The highest yearly nationwide Asian/Pacific Islander prisoner percentage rate was `r highest_year_percent`%, in `r highest_year`.
+
+## Trend Over Time Chart
+
+```{r echo=FALSE, message=FALSE}
+source("chart1.R")
+fig
+```
+
+This chart was intended to show how the percentages of white and Asian/Pacific Islander prisoners in states have changed over time. It aims to show that the percentage of Asian/Pacific Islander prisoners has increased over time, but the percentage of white prisoners has stagnated/decreased over time. In particular, it shows the percentage of white and Asian/Pacific Islander prisoners in the five states with the lowest percentage of Asian/Pacific Islander prisoners. From the chart, we can see that although the percentage of white prisoners fluctuates a lot, there is no noticeable upward trend in any of the states' white prisoner percentages. In fact, in Massachussetts, Nevada, and Minnesota, there is an observable downward trend in the states' white prisoner percentages. This suggests that the proportion of white prisoners in prisons is decreasing or staying constant over time. In contrast, in all five states, despite being the states with the lowest percentage of Asian/Pacific Islander prisoners, there is a noticeable upward trend in all five states' Asian/Pacific Islander prisoner percentages. This suggests that the proportion of Asian/Pacific Islander prisoners in prisons is increasing over time. Combining these two results, we can infer that there has been developing racial biases raising the percentage of Asian/Pacific Islander prisoners and decreasing the percentage of white prisoners.
+
+## Variable Comparison Chart
+
+```{r echo=FALSE, message=FALSE, warning = FALSE}
+source("chart2.R")
+fig
+```
+
+This chart was intended to show how the percentages of white and Asian/Pacific Islander prisoners in counties relate to the county's total prisoner count. In particular, it aims to show that the less prisoners in a county total, the higher percentage of Asian/Pacific Islander prisoners there are. From the chart, we can see that for both white and Asian/Pacific Islander prisoner percentages, the lower the number of prisoners in the county total, the higher the percentage. However, this trend is much more pronounced for the Asian/Pacific Islander prisoners, which can be observed by the constantly downward sloping bounding curve of the Asian/Pacific Islander points (which means that as total prisoner count increases, Asian/Pacific Islander prisoner percentage decreases consistently), while the trend only holds loosely for the white prisoner percentages, which can be observed by the unconsistantly downward sloping bounding curve of the white points (which means that as total prisoner count increases, white prisoner percentage does not decrease consistently). Combining these results, we can infer that counties with higher total prisoner populations generally are less racially biased against Asian/Pacific Islanders and white people, and thus have lower percentages of Asian/Pacific Islander and white prisoners, although this inference holds much more consistently for Asian/Pacific Islander prisoner percentages than for white prisoner percentages. 
+
+## Geographical Distribution Map
+
+```{r echo=FALSE, message=FALSE}
+source("map.R")
+```
+
+These maps were intended to show how the percentage of white and Asian/Pacific Islander prisoners in counties are distributed geographically. In particular, it aims to identify if certain geographic regions in the US have overall higher percentages of Asian/Pacific Islander or white prisoners. From the top map, we can see that most of the darker green shaded counties, or counties with higher percentages of Asian/Pacific Islander prisoners, are mostly clustered near the middle of the US. From the bottom map, we can see that the darker orange shaded counties, or counties with higher percentages of white prisoners, are generally well spread throughout the US, and there is no obvious regions with darker orange shaded counties only (although certain states, such as Wyoming, have only darker shaded orange counties). This suggests that racial bias against Asian/Pacific Islanders is more prominent in the middle US regions, leading to a region of many counties with high percentages of Asian/Pacific Islander prisoners, whereas racial bias against white people is not clustered in any particular region of the US and thus the counties with high white prisoner percentages are generally well spread out throughout the US.
